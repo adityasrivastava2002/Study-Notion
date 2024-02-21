@@ -2,7 +2,7 @@ const express=require("express");
 const router=express.Router();
 
 const {
-    showAllcategory,
+    showAllCategory,
     createCategory,
     categoryPageDetails,
 }=require("../controllers/Category");
@@ -10,7 +10,11 @@ const {
 const {
     createCourse,
     getAllCourse,
-    getCourseDetails
+    getCourseDetails,
+    getInstructorCourses,
+    deleteCourse,
+    getFullCourseDetails,
+    editCourse,
 }=require("../controllers/Course");
 
 const {
@@ -43,10 +47,14 @@ router.post("/deleteSubSection",auth, isInstructor, deleteSubSection);
 router.post("/addSubSection",auth,isInstructor,createSubSection);
 router.get("/getAllCourses",getAllCourse);
 router.get("/getCourseDetails",getCourseDetails);
+router.post("/getFullCourseDetails", auth, getFullCourseDetails)
+router.post("/editCourse", auth, isInstructor, editCourse)
+router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
+router.delete("/deleteCourse", auth, isInstructor, deleteCourse);
 
 // category routes
 router.post("/createCategory", auth, isAdmin, createCategory);
-router.get("/showAllCategories",showAllcategory);
+router.get("/showAllCategories",showAllCategory);
 router.get("/getCategoryPageDetails",categoryPageDetails);
 
 // rating and review routes

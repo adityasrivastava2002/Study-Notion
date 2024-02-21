@@ -25,7 +25,7 @@ const ExploreMore = () => {
         setCurrentCard(result[0].courses[0].heading);
     }
   return (
-    <div>
+    <div className='max-md:flex max-md:flex-col'>
 
         <div className='text-4xl font-semibold text-center'>
             Unlock the
@@ -36,7 +36,7 @@ const ExploreMore = () => {
             Learn to build anything you can imagine.
         </p>
 
-        <div className='flex flex-row gap-4 mb-5 bg-richblack-800 rounded-full'>
+        <div className='flex flex-row gap-4 mb-5 bg-richblack-800 md:rounded-full max-md:flex-col'>
             {
                 tabsName.map( (element, index)  => {
                     return (

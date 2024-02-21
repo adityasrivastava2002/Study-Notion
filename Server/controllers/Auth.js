@@ -178,7 +178,7 @@ exports.logIn=async(req,res)=>{
             })
         }
         //generate JWT. after password matching
-        if(bcrypt.compare(password,user.password)){
+        if(await bcrypt.compare(password,user.password)){
             const payload={
                 email:user.email,
                 id:user._id,
@@ -247,6 +247,7 @@ exports.changePassword=async(req,res)=>{
         try {
             const emailResponse=await mailSender(
                                 userDetails.email,
+                                "Password Change",
                                 `Password updated succesfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
             )
             console.log(emailResponse);
@@ -258,6 +259,9 @@ exports.changePassword=async(req,res)=>{
             });
         } 
         // return response
+        return res
+			.status(200)
+			.json({ success: true, message: "Password updated successfully" });
     } catch (error) {
         return res.status(500).json({
             success:false,

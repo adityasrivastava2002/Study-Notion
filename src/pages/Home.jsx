@@ -16,16 +16,19 @@ const Home = () => {
             text-white justify-between">
 
                 {/* top header */}
-                <Link to={"/signup"}>
-                    <div className="bg-richblack-800 rounded-full mt-16 p-1 mx-auto font-bold text-richblack-200
-                    transition-all duration-200 hover:scale-95 hover:bg-richblack-900 border-2 w-fit">
+                <div className="bg-richblack-800 rounded-full mt-16 p-1 mx-auto font-bold text-richblack-200
+                transition-all duration-200 hover:scale-95 hover:bg-richblack-900 border-2 w-fit">
+                    <Link to={"/signup"}>
                         <div className="flex flex-row items-center gap-2 rounded-full
                         px-10 py-[5px]">
                             <p>Become Instructor</p>
                             <FaArrowRight/>
                         </div>
-                    </div>
-                </Link>
+                    </Link>
+                </div>
+                
+                    
+                
 
                 <div className="mt-8 text-4xl flex flex-row font-semibold text-center justify-center">
                     <div>
