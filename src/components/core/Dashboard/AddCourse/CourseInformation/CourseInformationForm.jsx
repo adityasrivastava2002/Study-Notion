@@ -74,24 +74,44 @@ const CourseInformationForm = () => {
   const onSubmit = async (data) => {
     if (editCourse) {
       if( isFormUpdated()) {
+        const currentValues = getValues()
         const formData = new FormData()
-
-        formData.append("courseId", course.id)
-        formData.append("courseName", data.courseTitle)
-        formData.append("courseDescription", data.courseShortDesc)
-        formData.append("price", data.coursePrice)
-        formData.append("tag", JSON.stringify(data.courseTags))
-        formData.append("whatYouWillLearn", data.courseBenefits)
-        formData.append("category", data.courseCategory)
-        formData.append(
-          "instructions",
-          JSON.stringify(data.courseRequirements)
-        )
-        formData.append("thumbnailImage", data.courseImage)
+        // console.log(data)
+        formData.append("courseId", course._id)
+        if (currentValues.courseTitle !== course.courseName) {
+          formData.append("courseName", data.courseTitle)
+        }
+        if (currentValues.courseShortDesc !== course.courseDescription) {
+          formData.append("courseDescription", data.courseShortDesc)
+        }
+        if (currentValues.coursePrice !== course.price) {
+          formData.append("price", data.coursePrice)
+        }
+        if (currentValues.courseTags.toString() !== course.tag.toString()) {
+          formData.append("tag", JSON.stringify(data.courseTags))
+        }
+        if (currentValues.courseBenefits !== course.whatYouWillLearn) {
+          formData.append("whatYouWillLearn", data.courseBenefits)
+        }
+        if (currentValues.courseCategory._id !== course.category._id) {
+          formData.append("category", data.courseCategory)
+        }
+        if (
+          currentValues.courseRequirements.toString() !==
+          course.instructions.toString()
+        ) {
+          formData.append(
+            "instructions",
+            JSON.stringify(data.courseRequirements)
+          )
+        }
+        if (currentValues.courseImage !== course.thumbnail) {
+          formData.append("thumbnailImage", data.courseImage)
+        }
         setLoading(true)
         const result = await editCourseDetails(formData, token)
         setLoading(false)
-        if(result) {
+        if (result) {
           dispatch(setStep(2))
           dispatch(setCourse(result))
         }
@@ -100,17 +120,18 @@ const CourseInformationForm = () => {
       }
       return
     }
-    console.log(data.course)
+    // console.log(data.course)
 
     const formData = new FormData()
     formData.append("courseName", data.courseTitle)
     formData.append("courseDescription", data.courseShortDesc)
     formData.append("price", data.coursePrice)
-    formData.append("tag", JSON.stringify(data.courseTags))
+    data.courseTags.forEach((item) => formData.append("tag", item))
+    // formData.append("tag", JSON.stringify(data.courseTags))
     formData.append("whatYouWillLearn", data.courseBenefits)
     formData.append("category", data.courseCategory)
     formData.append("status", COURSE_STATUS.DRAFT)
-    formData.append("instructions", JSON.stringify(data.courseRequirements))
+    data.courseRequirements.forEach((item) => formData.append("instructions", item))
     formData.append("thumbnailImage", data.courseImage)
     setLoading(true)
     const result = await addCourseDetails(formData, token)
@@ -282,7 +303,7 @@ const CourseInformationForm = () => {
           <button
             onClick={() => dispatch(setStep(2))}
             disabled={loading}
-            className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900`}
+            className={`flex items-center gap-x-2 mt-6 font-medium rounded-md px-[12px] py-[8px] bg-richblack-300 text-richblack-900`}
           >
             Continue Wihout Saving
           </button>

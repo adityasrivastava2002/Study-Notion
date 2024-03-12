@@ -5,6 +5,7 @@ import { VscEdit, VscTrash } from 'react-icons/vsc'
 import { FaClock, FaCheckCircle } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import ConfirmationModal from '../components/common/ConfirmationModal'
+import IconBtn from '../components/common/IconBtn'
 
 const MyCourses = () => {
     const navigate = useNavigate()
@@ -38,7 +39,16 @@ const MyCourses = () => {
     },[])
   return (
     <div className='text-richblack-100'>
-        <h1 className='text-3xl text-richblack-5'>My Courses</h1>
+        <div className='flex justify-between w-[100%]'>
+            <h1 className='text-3xl text-richblack-5'>My Courses</h1>
+            <IconBtn
+                customClasses={"flex items-center gap-x-2 font-semibold text-richblack-900 bg-yellow-50 rounded-md px-[12px] py-[8px]"} 
+                type={"button"}
+                onclick={() => navigate("/dashboard/add-course")}
+                text={"Add Courses +"}
+            />
+        </div>
+        
         <div className='border-[1px] border-richblack-700 rounded-md my-6'>
             <div className='flex p-4 border-b-[1px] border-b-richblack-700'>
                 <p className='w-[70%]'>Courses</p>
@@ -49,7 +59,7 @@ const MyCourses = () => {
             {/* course card */}
             {
                 courses.map((course, index)=>(
-                    <div className='flex p-4'>
+                    <div className='flex p-4' key={index}>
                         <div className='flex items-center w-[70%] gap-x-4'>
                             <img
                                 src={course?.thumbnail}
@@ -70,7 +80,7 @@ const MyCourses = () => {
                                 )}</p>
                             </div>
                         </div>
-                        <div className='w-[10%] flex text-center items-center justify-center'>{course?.duration}</div>
+                        <div className='w-[10%] flex text-center items-center justify-center'>{"2hr 30min"}</div>
                         <div className='w-[10%] flex text-center items-center justify-center'>{course?.price}</div>
                         <div className='w-[10%] flex gap-x-2 items-center justify-center text-lg'>
                             <button

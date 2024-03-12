@@ -8,7 +8,7 @@ exports.createSubSection=async(req,res)=>{
     try {
         // fetch data
         const {sectionId,title,description}=req.body;
-        const video=req.files.videoFile;
+        const video=req.files.video;
         // validation
         if(!sectionId || !title || !description){
             return res.status(400).json({
@@ -35,13 +35,13 @@ exports.createSubSection=async(req,res)=>{
         return res.status(200).json({
             success:true,
             message:"subsection created successfully",
-            updatedSection,
+            data:updatedSection,
             subsectionDetails,
         });
     } catch (error) {
         return res.status(500).json({
             success:false,
-            message:"Unable to create section",
+            message:"Unable to create subsection",
             error:error.message,
         });
     }
@@ -50,8 +50,8 @@ exports.createSubSection=async(req,res)=>{
 // update subsection
 exports.updateSubSection=async(req,res)=>{
     try {
-        const {sectionId,title,description}=req.body;
-        const subSection=await SubSection.findById(sectionId);
+        const {sectionId,subSectionId,title,description}=req.body;
+        const subSection=await SubSection.findById(subSectionId);
         if(!subSection){
             return res.status(404).json({
                 success:false,
@@ -76,8 +76,11 @@ exports.updateSubSection=async(req,res)=>{
         }
         subSection.save()
 
+        const updatedSection = await Section.findById(sectionId).populate("subSection");
+
         return res.status(200).json({
             success:true,
+            data:updatedSection,
             message:"Updated subsection",
         });
     } catch (error) {
@@ -108,9 +111,11 @@ exports.deleteSubSection=async(req,res)=>{
                 error:error.message,
             });
         }
+        const updatedSection = await Section.findById(sectionId).populate("subSection");
         return res.status(200).json({
             success:true,
             message:"deleted subsection",
+            data:updatedSection,
         });
     } catch (error) {
         return res.status(500).json({

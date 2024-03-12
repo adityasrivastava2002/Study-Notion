@@ -78,7 +78,7 @@ exports.createCourse=async(req,res)=>{
             {_id:category},
             {
                 $push:{
-                    course:newCourse._id,
+                    courses:newCourse._id,
                 },
             },
             {new:true}
@@ -235,9 +235,9 @@ exports.getCourseDetails=async(req,res)=>{
 
 exports.getFullCourseDetails = async (req, res) => {
     try {
-        const courseId = req.body
+        const {courseId} = req.body
         const userId = req.user.id
-        const courseDetails = await Course.findOne(courseId)
+        const courseDetails = await Course.findById(courseId)
         .populate({
             path: "instructor",
             populate: {
@@ -245,7 +245,7 @@ exports.getFullCourseDetails = async (req, res) => {
             },
         })
         .populate("category")
-        .populate("ratingAndReviews")
+        // .populate("ratingAndReviews")
         .populate({
             path: "courseContent",
             populate: {
@@ -254,12 +254,12 @@ exports.getFullCourseDetails = async (req, res) => {
         })
         .exec()
 
-        let courseProgressCount = await CourseProgress.findOne({
-            courseID: courseId,
-            userId: userId,
-        })
+        // let courseProgressCount = await CourseProgress.findOne({
+        //     courseID: courseId,
+        //     userId: userId,
+        // })
 
-        console.log("courseProgressCount : ", courseProgressCount)
+        // console.log("courseProgressCount : ", courseProgressCount)
 
         if(!courseDetails) {
             return res.status(404).json({
@@ -283,9 +283,9 @@ exports.getFullCourseDetails = async (req, res) => {
         data: {
             courseDetails,
             totalDuration,
-            completedVideos: courseProgressCount?.completedVideos
-            ? courseProgressCount?.completedVideos
-            : [],
+            // completedVideos: courseProgressCount?.completedVideos
+            // ? courseProgressCount?.completedVideos
+            // : [],
         },
         })
     } catch (error) {
