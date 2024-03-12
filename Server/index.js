@@ -20,12 +20,18 @@ database.connect();
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-    cors({
-        origin:"http://localhost:3000",
-        credentials:true,
-    })
-)
+app.use(cors({
+    origin: function(origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (origin === "http://localhost:3000" || origin === "https://study-notion-mocha-five.vercel.app") {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true
+}));
 
 app.use(
     fileUpload({
