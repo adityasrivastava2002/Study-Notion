@@ -22,7 +22,9 @@ const Navbar = () => {
     //     }
     // ]
     const [subLinks, setSubLinks]=useState([]);
+    const [loading,setLoading] = useState(false)
     const fetchSubLinks=async()=>{
+        setLoading(true)
         try{
             const result=await apiConnector("GET", categories.CATEGORIES_API);
             console.log("Printing sublinks result:", result);
@@ -30,6 +32,7 @@ const Navbar = () => {
         } catch(error){
             console.log("Could not fetch the category list");
         }
+        setLoading(false)
     }
 
     useEffect( ()=>{
@@ -70,10 +73,12 @@ const Navbar = () => {
                                             <div className='absolute left-[50%] top-0
                                             translate-x-[70%] translate-y-[-35%] h-6 w-6 rotate-45 rounded bg-richblack-5'>
                                             </div>
-                                            {
+                                            {loading
+                                            ? (<div className='spinner'>Loading...</div>)
+                                            :
                                                 subLinks.length>0 ? (
                                                     subLinks.map((subLink, index)=>(
-                                                        <Link to={`/${subLink.name}`} key={index}
+                                                        <Link to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`} key={index}
                                                         className='z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden border-[1px] border-richblack-700
                                                         flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-900 hover:bg-richblack-700 hover:text-richblack-25'>
                                                             <p>{subLink.name}</p>

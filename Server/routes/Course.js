@@ -47,7 +47,7 @@ router.post("/deleteSubSection",auth, isInstructor, deleteSubSection);
 router.post("/addSubSection",auth,isInstructor,createSubSection);
 router.get("/getAllCourses",getAllCourse);
 router.get("/getCourseDetails",getCourseDetails);
-router.get("/getFullCourseDetails", auth, getFullCourseDetails)
+router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 router.post("/editCourse", auth, isInstructor, editCourse)
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 router.delete("/deleteCourse", auth, isInstructor, deleteCourse);
@@ -55,7 +55,7 @@ router.delete("/deleteCourse", auth, isInstructor, deleteCourse);
 // category routes
 router.post("/createCategory", auth, isAdmin, createCategory);
 router.get("/showAllCategories",showAllCategory);
-router.get("/getCategoryPageDetails",categoryPageDetails);
+router.post("/getCategoryPageDetails",categoryPageDetails);
 
 // rating and review routes
 router.post("/createRating",auth, isStudent, createRating);

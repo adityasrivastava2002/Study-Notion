@@ -10,3 +10,12 @@ html, body {
 .homepage_bg {
     background: url("./assets//Images/bghome.svg");
 }
+
+.spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 9px solid #f1f2ff;
+    animation: spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
+  }

@@ -78,36 +78,16 @@ const CourseInformationForm = () => {
         const formData = new FormData()
         // console.log(data)
         formData.append("courseId", course._id)
-        if (currentValues.courseTitle !== course.courseName) {
-          formData.append("courseName", data.courseTitle)
-        }
-        if (currentValues.courseShortDesc !== course.courseDescription) {
-          formData.append("courseDescription", data.courseShortDesc)
-        }
-        if (currentValues.coursePrice !== course.price) {
-          formData.append("price", data.coursePrice)
-        }
-        if (currentValues.courseTags.toString() !== course.tag.toString()) {
-          formData.append("tag", JSON.stringify(data.courseTags))
-        }
-        if (currentValues.courseBenefits !== course.whatYouWillLearn) {
-          formData.append("whatYouWillLearn", data.courseBenefits)
-        }
-        if (currentValues.courseCategory._id !== course.category._id) {
+        formData.append("courseName", data.courseTitle)
+        formData.append("courseDescription", data.courseShortDesc)
+        formData.append("price", data.coursePrice)
+        data.courseTags.forEach((item) => formData.append("tag", item))
+        formData.append("whatYouWillLearn", data.courseBenefits)
+        if(currentValues.courseCategory._id !== course.category._id) {
           formData.append("category", data.courseCategory)
         }
-        if (
-          currentValues.courseRequirements.toString() !==
-          course.instructions.toString()
-        ) {
-          formData.append(
-            "instructions",
-            JSON.stringify(data.courseRequirements)
-          )
-        }
-        if (currentValues.courseImage !== course.thumbnail) {
-          formData.append("thumbnailImage", data.courseImage)
-        }
+        data.courseRequirements.forEach((item) => formData.append("instructions", item))
+        formData.append("thumbnailImage", data.courseImage)
         setLoading(true)
         const result = await editCourseDetails(formData, token)
         setLoading(false)

@@ -74,15 +74,16 @@ exports.createCourse=async(req,res)=>{
         );
 
         // update category shema
-        await Category.findByIdAndUpdate(
-            {_id:category},
-            {
-                $push:{
-                    courses:newCourse._id,
-                },
+        const categoryDetails2 = await Category.findByIdAndUpdate(
+          { _id: category },
+          {
+            $push: {
+              course: newCourse._id,
             },
-            {new:true}
+          },
+          { new: true }
         )
+        console.log("HEREEEEEEEE", categoryDetails2)
         // return res
         return res.status(200).json({
             success:true,
@@ -235,66 +236,75 @@ exports.getCourseDetails=async(req,res)=>{
 
 exports.getFullCourseDetails = async (req, res) => {
     try {
-        const {courseId} = req.body
-        const userId = req.user.id
-        const courseDetails = await Course.findById(courseId)
+      const { courseId } = req.body
+      const userId = req.user.id
+      const courseDetails = await Course.findOne({
+        _id: courseId,
+      })
         .populate({
-            path: "instructor",
-            populate: {
-                path: "additionalDetails",
-            },
+          path: "instructor",
+          populate: {
+            path: "additionalDetails",
+          },
         })
         .populate("category")
         // .populate("ratingAndReviews")
         .populate({
-            path: "courseContent",
-            populate: {
+          path: "courseContent",
+          populate: {
             path: "subSection",
-            },
+          },
         })
         .exec()
-
-        // let courseProgressCount = await CourseProgress.findOne({
-        //     courseID: courseId,
-        //     userId: userId,
-        // })
-
-        // console.log("courseProgressCount : ", courseProgressCount)
-
-        if(!courseDetails) {
-            return res.status(404).json({
-                success:false,
-                message:"Could not find course"
-            })
-        }
-
-        let totalDurationInSeconds = 0
-        courseDetails.courseContent.forEach((content) => {
+  
+    //   let courseProgressCount = await CourseProgress.findOne({
+    //     courseID: courseId,
+    //     userId: userId,
+    //   })
+  
+    //   console.log("courseProgressCount : ", courseProgressCount)
+  
+      if (!courseDetails) {
+        return res.status(400).json({
+          success: false,
+          message: `Could not find course with id: ${courseId}`,
+        })
+      }
+  
+      // if (courseDetails.status === "Draft") {
+      //   return res.status(403).json({
+      //     success: false,
+      //     message: `Accessing a draft course is forbidden`,
+      //   });
+      // }
+  
+      let totalDurationInSeconds = 0
+      courseDetails.courseContent.forEach((content) => {
         content.subSection.forEach((subSection) => {
-            const timeDurationInSeconds = parseInt(subSection.timeDuration)
-            totalDurationInSeconds += timeDurationInSeconds
+          const timeDurationInSeconds = parseInt(subSection.timeDuration)
+          totalDurationInSeconds += timeDurationInSeconds
         })
-        })
-
-        const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
-
-        return res.status(200).json({
+      })
+  
+      const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+  
+      return res.status(200).json({
         success: true,
         data: {
-            courseDetails,
-            totalDuration,
-            // completedVideos: courseProgressCount?.completedVideos
-            // ? courseProgressCount?.completedVideos
-            // : [],
+          courseDetails,
+          totalDuration,
+        //   completedVideos: courseProgressCount?.completedVideos
+        //     ? courseProgressCount?.completedVideos
+        //     : [],
         },
-        })
+      })
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message,
-          })
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      })
     }
-}
+  }
 
 exports.getInstructorCourses = async (req, res) => {
     try {
@@ -324,6 +334,7 @@ exports.getInstructorCourses = async (req, res) => {
 exports.deleteCourse = async(req, res) => {
     try {
         const {courseId} = req.body
+        const id = req.user.id
 
         // find the course
         const course = await Course.findById(courseId)
@@ -355,6 +366,15 @@ exports.deleteCourse = async(req, res) => {
             // delete section
             await Section.findByIdAndDelete(sectionId)
         }
+        // delete from category
+        await Category.findByIdAndUpdate(course.category,{
+          $pull: {course: courseId},
+        })
+
+        // delete from user
+        await User.findByIdAndUpdate(id,{
+          $pull: {courses: courseId}
+        })
         // delete course
         await Course.findByIdAndDelete(courseId)
 

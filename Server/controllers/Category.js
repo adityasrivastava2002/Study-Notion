@@ -55,8 +55,11 @@ exports.categoryPageDetails=async(req,res)=>{
         const {categoryId}=req.body;
         // get courses for specified category
         const selectedCategory=await Category.findById(categoryId)
-                                .populate("course")
-                                .exec();
+        .populate({
+            path: "course",
+            match: {status: "Published"},
+        })
+        .exec()
         // validation
         if(!selectedCategory){
             return res.status(404).json({
@@ -65,9 +68,29 @@ exports.categoryPageDetails=async(req,res)=>{
             })
         }
         // get courses for different catgeory
-        const differentCategories=await Category.find({_id:{$ne:categoryId}})
-                                    .populate("course")
-                                    .exec();
+        const categoriesExceptSelected=await Category.find({_id:{$ne:categoryId}})
+        const differentCategories = await Category.find(
+            categoriesExceptSelected[Math.floor(Math.random() * categoriesExceptSelected.length)]._id
+        )
+        .populate({
+            path: "course",
+            match: {status: "Published"},
+            populate: {
+                path: "instructor",
+            },
+        })
+        .exec()
+        const allCategories = await Category.find({})
+        .populate({
+            path: "course",
+            match: {status: "Published"},
+            populate: {
+                path: "instructor",
+            },
+        })
+        .exec()
+        const allCourses = allCategories.flatMap((category) => category.course)
+        const mostSellingCourses = allCourses.sort((a, b) => b.sold - a.sold).slice(0,10)
         // top selling
         // const top
         // return response
@@ -77,6 +100,7 @@ exports.categoryPageDetails=async(req,res)=>{
             data:{
                 selectedCategory,
                 differentCategories,
+                mostSellingCourses,
             },
         })
     } catch (error) {
