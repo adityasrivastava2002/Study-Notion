@@ -46,7 +46,7 @@ router.post("/updateSubSection",auth, isInstructor, updateSubSection);
 router.post("/deleteSubSection",auth, isInstructor, deleteSubSection);
 router.post("/addSubSection",auth,isInstructor,createSubSection);
 router.get("/getAllCourses",getAllCourse);
-router.get("/getCourseDetails",getCourseDetails);
+router.post("/getCourseDetails",getCourseDetails);
 router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 router.post("/editCourse", auth, isInstructor, editCourse)
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)

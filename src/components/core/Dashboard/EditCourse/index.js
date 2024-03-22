@@ -3,7 +3,7 @@ import RenderSteps from '../AddCourse/RenderSteps'
 import { useDispatch, useSelector } from 'react-redux'
 import { getFullDetailsOfCourse } from '../../../../services/operations/courseAPI'
 import { useParams } from 'react-router-dom'
-import { setCourse, setEditCourse } from '../../../../Redux/slices/courseSlice'
+import { resetCourseState, setCourse, setEditCourse } from '../../../../Redux/slices/courseSlice'
 
 export default function EditCourse() {
     const {course} = useSelector((state)=>state.course)
@@ -23,6 +23,10 @@ export default function EditCourse() {
             setLoading(false)
         }
         populateCourseDetails()
+
+        return () => {
+            dispatch(resetCourseState());
+        };
     },[])
 
     if(loading) {

@@ -19,6 +19,7 @@ const CourseInformationForm = () => {
     setValue,
     getValues,
     formState: {errors},
+    reset,
   } = useForm()
 
   const dispatch = useDispatch()
@@ -48,6 +49,8 @@ const CourseInformationForm = () => {
       setValue("courseCategory", course.category)
       setValue("courseRequirements", course.instructions)
       setValue("courseImage", course.thumbnail)
+    } else {
+      reset()
     }
 
     getCategories()
