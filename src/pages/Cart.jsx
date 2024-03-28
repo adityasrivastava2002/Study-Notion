@@ -7,14 +7,13 @@ const Cart = () => {
     const {total, totalItems} = useSelector((state)=>state.cart)
   return (
     <div className='text-richblack-5'>
-        <h1 className='text-3xl'>My Wishlist</h1>
-        <p>{totalItems} courses in your cart</p>
-        <div className='border-[1px] border-richblack-700 mt-4'></div>
+        <h1 className='mb-14 text-3xl font-medium text-richblack-5'>My Wishlist</h1>
+        <p className='border-b border-b-richblack-400 pb-2 font-semibold text-richblack-400'>{totalItems} courses in your cart</p>
         
         {
             total<1 ? 
-            (<div className='text-3xl flex justify-center items-center'>Your Cart is Empty</div>) :
-            (<div>
+            (<div className='mt-14 text-center text-3xl text-richblack-100'>Your Cart is Empty</div>) :
+            (<div className='mt-8 flex flex-col-reverse items-start gap-x-10 gap-y-6 lg:flex-row'>
                 <RenderCartCourses/>
                 <RenderTotalAmount/>
             </div>)

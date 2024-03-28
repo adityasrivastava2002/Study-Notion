@@ -41,7 +41,7 @@ const EnrolledCourses = () => {
 
                         {
                             enrolledCourses.map((course, index) => (
-                                <div className='flex gap-x-4 p-4 border-b-[1px] border-b-richblack-700' key={course.id}>
+                                <div className='flex gap-x-4 p-4 border-b-[1px] border-b-richblack-700' key={index}>
                                     <div className='flex w-[50%]'>
                                         <img  src={course.thumbnail}
                                             className='aspect-square w-[40px] h-[40px] rounded-md'
@@ -52,18 +52,19 @@ const EnrolledCourses = () => {
                                                 {showDescription ? 
                                                 (<div>
                                                     {course.courseDescription}
-                                                    <span onClick={()=>setShowDescription(!showDescription)}>
+                                                    <span className='text-yellow-50' onClick={()=>setShowDescription(!showDescription)}>
                                                         <br/>
                                                         Hide Description
                                                     </span>
                                                 </div>) : 
-                                                <div onClick={()=>setShowDescription(!showDescription)}>Show Description</div>}
+                                                <div className='text-yellow-50' onClick={()=>setShowDescription(!showDescription)}>Show Description</div>}
                                             </p>
                                         </div>
                                     </div>
 
                                     <div className='w-[20%]'>
-                                        {course?.totalDuration}
+                                        {/* {course?.totalDuration} */}
+                                        2hr 30min
                                     </div>
 
                                     <div className='w-[20%]'>

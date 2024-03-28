@@ -7,13 +7,15 @@ import CourseDetailsCard from '../components/core/Course/CourseDetailsCard';
 import ConfirmationModal from '../components/common/ConfirmationModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { HiOutlineVideoCamera } from "react-icons/hi";
+import { buyCourse } from '../services/operations/studentFeaturesAPI';
 
 const CourseDetails = () => {
   const {courseId} = useParams()
   const [courseData, setCourseData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [confirmationModal, setConfirmationModal] = useState(null)
-  const {token} = useSelector((state) => state.profile)
+  const {user} = useSelector((state) => state.profile)
+  const {token} = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [sectionCollapse, setSectionCollapse] = useState(false)
@@ -33,7 +35,7 @@ const CourseDetails = () => {
 
   const handleBuyCourse = () => {
     if(token) {
-      // handleBuyCourse(token, [courseId], user, navigate, disptach);
+      buyCourse(token, [courseId], user, navigate, dispatch);
       return;
     }
     setConfirmationModal({
@@ -74,7 +76,7 @@ const CourseDetails = () => {
   }
 
   const {
-    _id,
+    _id: course_id,
     courseName,
     courseDescription,
     thumbnail,
