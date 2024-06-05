@@ -56,7 +56,6 @@ exports.updateSubSection=async(req,res)=>{
             return res.status(404).json({
                 success:false,
                 message:"Unable to get subsection",
-                error:error.message,
             });
         }
         if(title!==undefined){
@@ -71,7 +70,7 @@ exports.updateSubSection=async(req,res)=>{
                 video,
                 process.env.FOLDER_NAME,
             )
-            subSection.videoUrl=uploadDetails.secure_url,
+            subSection.videoUrl=uploadDetails.secure_url
             subSection.timeDuration=`${uploadDetails.duration}`
         }
         subSection.save()
@@ -108,7 +107,6 @@ exports.deleteSubSection=async(req,res)=>{
             return res.status(404).json({
                 success:false,
                 message:"Unable to delete subsection",
-                error:error.message,
             });
         }
         const updatedSection = await Section.findById(sectionId).populate("subSection");

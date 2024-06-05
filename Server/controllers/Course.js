@@ -3,6 +3,7 @@ const User=require("../models/User");
 const Category=require("../models/Category");
 const Section=require("../models/Section")
 const SubSection=require("../models/SubSection")
+const CourseProgress=require("../models/CourseProgress")
 const {uploadImageToCloudinary}=require("../utils/imageUploader");
 const {convertSecondsToDuration} = require("../utils/secToDuration")
 
@@ -248,7 +249,7 @@ exports.getFullCourseDetails = async (req, res) => {
           },
         })
         .populate("category")
-        // .populate("ratingAndReviews")
+        .populate("ratingAndReview")
         .populate({
           path: "courseContent",
           populate: {
@@ -257,12 +258,12 @@ exports.getFullCourseDetails = async (req, res) => {
         })
         .exec()
   
-    //   let courseProgressCount = await CourseProgress.findOne({
-    //     courseID: courseId,
-    //     userId: userId,
-    //   })
+      let courseProgressCount = await CourseProgress.findOne({
+        courseId: courseId,
+        userId: userId,
+      })
   
-    //   console.log("courseProgressCount : ", courseProgressCount)
+      console.log("courseProgressCount : ", courseProgressCount)
   
       if (!courseDetails) {
         return res.status(400).json({
@@ -271,12 +272,12 @@ exports.getFullCourseDetails = async (req, res) => {
         })
       }
   
-      // if (courseDetails.status === "Draft") {
-      //   return res.status(403).json({
-      //     success: false,
-      //     message: `Accessing a draft course is forbidden`,
-      //   });
-      // }
+      if (courseDetails.status === "Draft") {
+        return res.status(403).json({
+          success: false,
+          message: `Accessing a draft course is forbidden`,
+        });
+      }
   
       let totalDurationInSeconds = 0
       courseDetails.courseContent.forEach((content) => {
@@ -293,9 +294,9 @@ exports.getFullCourseDetails = async (req, res) => {
         data: {
           courseDetails,
           totalDuration,
-        //   completedVideos: courseProgressCount?.completedVideos
-        //     ? courseProgressCount?.completedVideos
-        //     : [],
+          completedVideos: courseProgressCount?.completedVideos
+            ? courseProgressCount?.completedVideos
+            : [],
         },
       })
     } catch (error) {

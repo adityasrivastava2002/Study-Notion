@@ -35,6 +35,10 @@ const {
     deleteSubSection
 }=require("../controllers/Subsection");
 
+const {
+    updateCourseProgress,
+} = require("../controllers/courseProgress")
+
 const {auth, isAdmin, isInstructor, isStudent}=require("../middlewares/auth");
 
 // course routes
@@ -51,6 +55,7 @@ router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 router.post("/editCourse", auth, isInstructor, editCourse)
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 router.delete("/deleteCourse", auth, isInstructor, deleteCourse);
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress)
 
 // category routes
 router.post("/createCategory", auth, isAdmin, createCategory);

@@ -27,7 +27,7 @@ const Catalog = () => {
         const getCategoryPageDetails = async() => {
             try {
                 const res = await getCatalogPageData({categoryId:categoryId})
-                // console.log(res)
+                // console.log("CATALOG..................",res)
                 setCatalogPageData(res)
             } catch (error) {
                 console.log(error)

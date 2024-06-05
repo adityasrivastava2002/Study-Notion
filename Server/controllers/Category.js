@@ -58,6 +58,7 @@ exports.categoryPageDetails=async(req,res)=>{
         .populate({
             path: "course",
             match: {status: "Published"},
+            populate: "ratingAndReview"
         })
         .exec()
         // validation
@@ -78,6 +79,9 @@ exports.categoryPageDetails=async(req,res)=>{
             populate: {
                 path: "instructor",
             },
+            populate: {
+                path: "ratingAndReview",
+            },
         })
         .exec()
         const allCategories = await Category.find({})
@@ -86,6 +90,9 @@ exports.categoryPageDetails=async(req,res)=>{
             match: {status: "Published"},
             populate: {
                 path: "instructor",
+            },
+            populate: {
+                path: "ratingAndReview",
             },
         })
         .exec()

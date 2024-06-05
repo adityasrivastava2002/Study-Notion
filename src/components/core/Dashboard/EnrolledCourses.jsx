@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux'
 import { getUserEnrolledCourses } from '../../../services/operations/profileAPI'
 import ProgressBar from '@ramonak/react-progress-bar'
 import {SlOptionsVertical} from "react-icons/sl"
+import { useNavigate } from 'react-router-dom'
 
 const EnrolledCourses = () => {
     const {token} = useSelector((state)=>state.auth)
+    const navigate = useNavigate()
 
     const [enrolledCourses, setEnrolledCourses] = useState([])
 
@@ -42,22 +44,32 @@ const EnrolledCourses = () => {
                         {
                             enrolledCourses.map((course, index) => (
                                 <div className='flex gap-x-4 p-4 border-b-[1px] border-b-richblack-700' key={index}>
-                                    <div className='flex w-[50%]'>
+                                    <div className='flex w-[50%]'
+                                        onClick={() => {
+                                            navigate(`/view-course/${course?._id}/section/${course?.courseContent[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`)
+                                        }}
+                                    >
                                         <img  src={course.thumbnail}
                                             className='aspect-square w-[40px] h-[40px] rounded-md'
                                         />
                                         <div className='px-4'>
                                             <p className='text-richblack-5'>{course.courseName}</p>
                                             <p>
-                                                {showDescription ? 
+                                                {showDescription === course._id ? 
                                                 (<div>
                                                     {course.courseDescription}
-                                                    <span className='text-yellow-50' onClick={()=>setShowDescription(!showDescription)}>
+                                                    <span className='text-yellow-50' onClick={(e)=>{
+                                                        e.stopPropagation();
+                                                        setShowDescription(null)
+                                                    }}>
                                                         <br/>
                                                         Hide Description
                                                     </span>
                                                 </div>) : 
-                                                <div className='text-yellow-50' onClick={()=>setShowDescription(!showDescription)}>Show Description</div>}
+                                                <div className='text-yellow-50' onClick={(e)=>{
+                                                    e.stopPropagation();
+                                                    setShowDescription(course._id)
+                                                }}>Show Description</div>}
                                             </p>
                                         </div>
                                     </div>

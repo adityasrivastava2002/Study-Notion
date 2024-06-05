@@ -60,7 +60,7 @@ const userSchema=new mongoose.Schema({
     courseProgress:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"CourseProgree",
+            ref:"CourseProgress",
         },
     ],
 },{timestamps:true});
