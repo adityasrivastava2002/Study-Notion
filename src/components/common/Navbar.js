@@ -8,6 +8,7 @@ import {AiOutlineShoppingCart} from "react-icons/ai"
 import { apiConnector } from '../../services/apiconnector';
 import { categories } from '../../services/apis';
 import {IoIosArrowDropdownCircle} from "react-icons/io"
+import {AiOutlineMenu, AiOutlineClose} from "react-icons/ai"
 import ProfileDropDown from '../core/Auth/ProfileDropDown';
 
 const Navbar = () => {
@@ -21,6 +22,7 @@ const Navbar = () => {
     //         link: "/catalog/we-dev"
     //     }
     // ]
+    const [sidePanel, setSidePanel] = useState(false);
     const [subLinks, setSubLinks]=useState([]);
     const [loading,setLoading] = useState(false)
     const fetchSubLinks=async()=>{
@@ -55,23 +57,21 @@ const Navbar = () => {
             </Link>
 
             {/* nav links*/}
-            <nav>
-                <ul className='flex gap-x-6 text-richblack-25'>
+            <nav className="relative">
+                <ul className={sidePanel ? 'max-md:pt-4 max-md:flex max-md:flex-col max-md:gap-y-4 max-md:w-[300px] max-md:h-[100vh] max-md:bg-richblack-800 max-md:fixed max-md:right-0 max-md:top-0 md:flex gap-x-6 text-richblack-25' : ' hidden md:flex gap-x-6 text-richblack-25'}>
                     {
                         NavbarLinks.map( (link,index)=>(
                             <li key={index}>
                                 {
                                     link.title === "Catalog"
-                                    ? (<div className='relative flex items-center gap-1 group'>
-                                        <p>{link.title}</p>
-                                        <IoIosArrowDropdownCircle/>
+                                    ? (<div className={sidePanel ? 'border-b-2 p-2' : 'relative flex items-center gap-1 group'}>
+                                        <div className='flex items-center gap-1'>
+                                            <p>{link.title}</p>
+                                            <IoIosArrowDropdownCircle/>
+                                        </div>
 
-                                        <div className='invisible absolute bg-richblack-5 text-black flex flex-col
-                                        left-[50%] top-[50%] translate-x-[-50%] translate-y-[20%] rounded-md
-                                        transition-all duration-200 opacity-0 group-hover:visible group-hover:opacity-100 w-[300px]
-                                        '>
-                                            <div className='absolute left-[50%] top-0
-                                            translate-x-[70%] translate-y-[-35%] h-6 w-6 rotate-45 rounded bg-richblack-5'>
+                                        <div className={sidePanel ? '' : 'invisible absolute bg-richblack-5 text-black flex flex-col left-[50%] top-[50%] translate-x-[-50%] translate-y-[20%] rounded-md transition-all duration-200 opacity-0 group-hover:visible group-hover:opacity-100 w-[300px]'}>
+                                            <div className={sidePanel ? '' : 'absolute left-[50%] top-0 translate-x-[70%] translate-y-[-35%] h-6 w-6 rotate-45 rounded bg-richblack-5'}>
                                             </div>
                                             {loading
                                             ? (<div className='spinner'>Loading...</div>)
@@ -79,8 +79,8 @@ const Navbar = () => {
                                                 subLinks.length>0 ? (
                                                     subLinks.map((subLink, index)=>(
                                                         <Link to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`} key={index}
-                                                        className='z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden border-[1px] border-richblack-700
-                                                        flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-900 hover:bg-richblack-700 hover:text-richblack-25'>
+                                                        onClick={() => setSidePanel(false)}
+                                                        className={sidePanel ? 'px-2' : 'z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden border-[1px] border-richblack-700 flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-900 hover:bg-richblack-700 hover:text-richblack-25'}>
                                                             <p>{subLink.name}</p>
                                                         </Link>
                                                     ))
@@ -91,8 +91,8 @@ const Navbar = () => {
 
                                     </div>)
                                     : (
-                                        <Link to={link?.path}>
-                                            <p className={`${matchRoute(link?.path)? "text-yellow-25": "text-richblack-25"}`}>
+                                        <Link to={link?.path} onClick={() => setSidePanel(false)}>
+                                            <p className={`${matchRoute(link?.path)? "text-yellow-25": "text-richblack-25"} ${sidePanel ? "border-b-2 p-2" : ""}`}>
                                                 {link.title}
                                             </p>
                                         </Link>
@@ -105,45 +105,54 @@ const Navbar = () => {
             </nav>
 
             {/* login/signup/dashboard */}
-            <div className='flex gap-x-4 items-center'>
-                {
-                    user && user.accountType!=="Instructor" && (
-                        <Link to="/dashboard/cart" className='relative'>
-                        <AiOutlineShoppingCart className='text-2xl text-richblack-5 relative'/>
-                        {
-                            totalItems>0 && (
-                                <span className='absolute top-[-6px] animate-bounce right-[-5px] text-sm flex items-center justify-center text-richblack-900 bg-yellow-50 rounded-full h-[15px] w-[15px]'>
-                                    {totalItems}
-                                </span>
-                            )
-                        }
-                        </Link>
-                    )
-                }
-                {
-                    token===null && (
-                        <Link to="/login">
-                            <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
-                            text-richblack-100 rounded-md'>
-                                Log in
-                            </button>
-                        </Link>
-                    )
-                }
-                {
-                    token===null && (
-                        <Link to="/signup">
-                            <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
-                            text-richblack-100 rounded-md'>
-                                Sign Up
-                            </button>
-                        </Link>
-                    )
-                }
-                {
-                    token!==null && <ProfileDropDown/>
-                }
+            <div className='relative'>
+                <div className={sidePanel ? 'absolutte max-md:pt-4 max-md:flex max-md:flex-col max-md:gap-y-4 max-md:w-[300px] max-md:h-[100vh] max-md:bg-richblack-800 max-md:fixed max-md:right-0 max-md:top-[31rem] p-2 md:flex gap-x-6 text-richblack-25' :'hidden md:flex gap-x-4 items-center'}>
+                    {
+                        user && user.accountType!=="Instructor" && (
+                            <Link to="/dashboard/cart" onClick={() => setSidePanel(false)} className='relative'>
+                            <AiOutlineShoppingCart className='text-2xl text-richblack-5 relative'/>
+                            {
+                                totalItems>0 && (
+                                    <span className='absolute top-[-6px] animate-bounce right-[-5px] text-sm flex items-center justify-center text-richblack-900 bg-yellow-50 rounded-full h-[15px] w-[15px]'>
+                                        {totalItems}
+                                    </span>
+                                )
+                            }
+                            </Link>
+                        )
+                    }
+                    {
+                        token===null && (
+                            <Link to="/login">
+                                <button onClick={() => setSidePanel(false)} className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
+                                text-richblack-100 rounded-md'>
+                                    Log in
+                                </button>
+                            </Link>
+                        )
+                    }
+                    {
+                        token===null && (
+                            <Link to="/signup">
+                                <button onClick={() => setSidePanel(false)} className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px]
+                                text-richblack-100 rounded-md'>
+                                    Sign Up
+                                </button>
+                            </Link>
+                        )
+                    }
+                    {
+                        token!==null && <ProfileDropDown/>
+                    }
+                </div>
             </div>
+            <button className="mr-4 md:hidden z-10" onClick={() => setSidePanel(!sidePanel)}>
+                {
+                    !sidePanel 
+                    ? <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
+                    : <AiOutlineClose fontSize={24} fill="#AFB2BF" />
+                }
+            </button>
         </div>
     </div>
   )
