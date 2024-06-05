@@ -75,8 +75,8 @@ const EnrolledCourses = () => {
                                     </div>
 
                                     <div className='w-[20%]'>
-                                        {/* {course?.totalDuration} */}
-                                        2hr 30min
+                                        {course?.totalDuration}
+                                        {/* 2hr 30min */}
                                     </div>
 
                                     <div className='w-[20%]'>
