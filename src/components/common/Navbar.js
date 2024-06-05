@@ -113,7 +113,7 @@ const Navbar = () => {
                             <AiOutlineShoppingCart className='text-2xl text-richblack-5 relative'/>
                             {
                                 totalItems>0 && (
-                                    <span className='absolute top-[-6px] animate-bounce right-[-5px] text-sm flex items-center justify-center text-richblack-900 bg-yellow-50 rounded-full h-[15px] w-[15px]'>
+                                    <span className={sidePanel ? 'absolute top-[-6px] animate-bounce right-[255px] text-sm flex items-center justify-center text-richblack-900 bg-yellow-50 rounded-full h-[15px] w-[15px]' :'absolute top-[-6px] animate-bounce right-[-5px] text-sm flex items-center justify-center text-richblack-900 bg-yellow-50 rounded-full h-[15px] w-[15px]'}>
                                         {totalItems}
                                     </span>
                                 )

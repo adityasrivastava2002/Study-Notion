@@ -38,7 +38,7 @@ const UpdatePassword = () => {
         <div className='bg-richblack-800 flex flex-col rounded-md border border-richblack-700
         p-8 my-6 gap-x-6 gap-y-4'>
         <h1 className='font-semibold text-lg'>Password</h1>
-            <div className='flex gap-x-4 w-full'>
+            <div className='flex gap-x-4 w-full max-md:flex-col max-md:gap-4'>
                 <label htmlFor='currentPassword' className='w-full relative'>
                     <p>Current Password</p>
                     <input

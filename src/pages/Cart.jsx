@@ -13,7 +13,7 @@ const Cart = () => {
         {
             total<1 ? 
             (<div className='mt-14 text-center text-3xl text-richblack-100'>Your Cart is Empty</div>) :
-            (<div className='mt-8 flex flex-col-reverse items-start gap-x-10 gap-y-6 lg:flex-row'>
+            (<div className='mt-8 flex max-lg:flex-col items-start gap-x-10 gap-y-6 lg:flex-row'>
                 <RenderCartCourses/>
                 <RenderTotalAmount/>
             </div>)

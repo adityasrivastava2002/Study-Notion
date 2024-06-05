@@ -52,7 +52,7 @@ const InstructorChart = ({courses}) => {
 
 
   return (
-    <div className='font-bold p-4 bg-richblack-800 w-[75%]'>
+    <div className='font-bold p-4 bg-richblack-800 md:w-[75%]'>
       <p>Visualise</p>
       <div className='flex gap-x-5 p-1'>
         <button

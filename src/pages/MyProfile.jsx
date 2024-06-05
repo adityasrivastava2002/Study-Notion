@@ -14,16 +14,16 @@ const MyProfile = () => {
         </h1>
             {/* section 1 */}
         <div className='bg-richblack-800 flex justify-between rounded-md border border-richblack-700 items-center
-        p-8 my-6'>
-            <div className='flex items-center justify-center gap-x-4'>
+        p-8 my-6 max-md:flex-col max-md:gap-2'>
+            <div className='flex items-center justify-center gap-x-4 max-md:flex-col'>
                 <img
                     src={user?.image}
                     alt={`profile-${user?.firstName}`}
-                    className='aspect-square w-[78px] rounded-full object-cover'
+                    className='aspect-square w-[78px] rounded-full object-cover max-md:text-center'
                 />
                 <div>
-                    <p className='font-semibold text-lg'>{user?.firstName + " " + user?.lastName}</p>
-                    <p className='text-richblack-300'>{user?.email}</p>
+                    <p className='font-semibold text-lg max-md:text-center'>{user?.firstName + " " + user?.lastName}</p>
+                    <p className='text-richblack-300 max-md:text-center'>{user?.email}</p>
                 </div>
             </div>
             <div className='flex items-center justify-center gap-x-2 bg-yellow-50 text-richblack-900 px-4 py-1 rounded-md'>
@@ -65,8 +65,8 @@ const MyProfile = () => {
                     />
                 </div>
             </div>
-            <div className='flex w-full'>
-                <div className='w-[50%] flex flex-col gap-y-5'>
+            <div className='flex w-full max-md:flex-col max-md:gap-4'>
+                <div className='md:w-[50%] flex flex-col gap-y-5'>
                     <div>
                         <p className='text-richblack-300'>First Name</p>
                         <p>{user?.firstName}</p>
@@ -80,7 +80,7 @@ const MyProfile = () => {
                         <p>{user?.additionalDetails?.gender}</p>
                     </div>
                 </div>
-                <div className='w-[50%] flex flex-col gap-y-5'>
+                <div className='md:w-[50%] flex flex-col gap-y-5'>
                     <div>
                         <p className='text-richblack-300'>Last Name</p>
                         <p>{user?.lastName}</p>

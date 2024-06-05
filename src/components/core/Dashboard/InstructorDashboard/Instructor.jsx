@@ -44,9 +44,9 @@ const Instructor = () => {
         :courses.length > 0
             ?(<div className='my-4'>
                 <div>
-                    <div className='flex gap-2'>
+                    <div className='md:flex gap-2'>
                         <InstructorChart courses={instructorData}/>
-                        <div className='bg-richblack-800 p-4 w-[24%]'>
+                        <div className='bg-richblack-800 p-4 w-[100%] max-md:text-center md:w-[24%]'>
                             <p className='font-bold my-2'>Statistics</p>
                             <div>
                                 <p className='text-richblack-200'>Total Courses</p>
@@ -72,11 +72,11 @@ const Instructor = () => {
                         <p className='p-4 text-yellow-50'>View all</p>
                     </Link>
                 </div>
-                <div className='gap-4 bg-richblack-800 flex justify-center'>
+                <div className='gap-4 bg-richblack-800 md:flex justify-center'>
                     {
                         courses.slice(0,3).map((course)=> (
                             <div key={course._id}
-                            className='w-[30%]'>
+                            className='md:w-[30%] max-md:p-2'>
                                 <Link to={'/course/my-courses'}>
                                     <img 
                                         src={course.thumbnail}

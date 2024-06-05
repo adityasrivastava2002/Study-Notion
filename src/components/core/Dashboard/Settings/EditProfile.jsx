@@ -42,8 +42,8 @@ const EditProfile = () => {
                 <h1 className='font-semibold text-lg'>
                     Profile Information
                 </h1>
-                <div className='flex gap-x-4'>
-                    <div className='w-[50%] flex flex-col gap-y-4'>
+                <div className='flex gap-x-4 max-md:flex-col  max-md:gap-4'>
+                    <div className='md:w-[50%] flex flex-col gap-y-4'>
                         {/* firstname */}
                         <label htmlFor='firstName'>
                             <p>First Name</p>
@@ -90,7 +90,7 @@ const EditProfile = () => {
                             />
                         </label>
                     </div>
-                    <div className='w-[50%] flex flex-col gap-y-4'>
+                    <div className='md:w-[50%] flex flex-col gap-y-4'>
                         {/* lastname */}
                         <label htmlFor='lastName'>
                             <p>Last Name</p>

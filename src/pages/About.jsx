@@ -19,7 +19,7 @@ const About = () => {
                         Studynotion is at the forefront of driving innovation in online education. We're passionate about creating a brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing a vibrant learning community.
                     </p>
                 </header>
-                <div className='flex justify-around gap-10 max-md:flex-col lg:flex-row'>
+                <div className='flex justify-around gap-10 max-md:flex-col lg:flex-row max-lg:px-2'>
                     <img src={BannerImage1} />
                     <img src={BannerImage2} />
                     <img src={BannerImage3} />

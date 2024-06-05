@@ -50,7 +50,7 @@ const MyCourses = () => {
         </div>
         
         <div className='border-[1px] border-richblack-700 rounded-md my-6'>
-            <div className='flex p-4 border-b-[1px] border-b-richblack-700'>
+            <div className='max-md:hidden flex p-4 border-b-[1px] border-b-richblack-700'>
                 <p className='w-[70%]'>Courses</p>
                 <p className='w-[10%] text-center'>Duration</p>
                 <p className='w-[10%] text-center'>Price</p>
@@ -59,16 +59,16 @@ const MyCourses = () => {
             {/* course card */}
             {
                 courses.map((course, index)=>(
-                    <div className='flex p-4' key={index}>
-                        <div className='flex items-center w-[70%] gap-x-4'>
+                    <div className='flex p-4 max-md:flex-col max-md:mx-auto' key={index}>
+                        <div className='flex items-center w-[70%] gap-x-4 max-md:flex-col max-md:mx-auto'>
                             <img
                                 src={course?.thumbnail}
                                 className='w-[150px] h-[90px] aspect-auto rounded-md'
                             />
-                            <div>
-                                <p className='text-richblack-5'>{course?.courseName}</p>
-                                <p>{course?.courseDescription}</p>
-                                <p>{course?.status === "Draft" ? 
+                            <div className='max-md:flex max-md:flex-col max-md:justify-center gap-y-4'>
+                                <p className='text-richblack-5 max-md:text-center'>{course?.courseName}</p>
+                                <p className='max-md:text-center'>{course?.courseDescription}</p>
+                                <p className='max-md:mx-auto'>{course?.status === "Draft" ? 
                                 (<span className='bg-richblack-700 rounded-full text-pink-400 max-w-max flex px-2 gap-x-2 items-center'>
                                     <FaClock />
                                     <span>Draft</span>
@@ -80,9 +80,9 @@ const MyCourses = () => {
                                 )}</p>
                             </div>
                         </div>
-                        <div className='w-[10%] flex text-center items-center justify-center'>{"2hr 30min"}</div>
-                        <div className='w-[10%] flex text-center items-center justify-center'>{course?.price}</div>
-                        <div className='w-[10%] flex gap-x-2 items-center justify-center text-lg'>
+                        <div className='md:w-[10%] flex text-center items-center max-md:py-2 justify-center'>{"2hr 30min"}</div>
+                        <div className='md:w-[10%] flex text-center items-center max-md:py-2 justify-center'>{course?.price}</div>
+                        <div className='md:w-[10%] flex gap-x-2 items-center max-md:py-2 justify-center text-lg'>
                             <button
                             title={"Edit"}
                             className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300"

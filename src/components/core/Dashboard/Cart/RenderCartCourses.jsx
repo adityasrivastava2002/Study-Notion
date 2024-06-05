@@ -9,29 +9,29 @@ const RenderCartCourses = () => {
     const {cart,total} = useSelector((state)=>state.cart)
     const dispatch = useDispatch()
   return (
-    <div>
+    <div className='max-lg:mx-auto'>
         {
             cart.map((course, index)=>(
                 <div
                     key={course._id}
                     className={`flex w-full flex-wrap items-start justify-between gap-6 ${
                     index !== cart.length - 1 && "border-b border-b-richblack-400 pb-6"
-                    } ${index !== 0 && "mt-6"} `}
+                    } ${index !== 0 && "mt-6"} max-lg:flex max-lg:flex-col max-lg:items-center`}
                 >
-                    <div className="flex flex-1 flex-col gap-4 xl:flex-row">
+                    <div className="flex flex-1 flex-col gap-4 lg:flex-row">
                         <img
                             src={course?.thumbnail}
                             alt={course?.courseName}
                             className="h-[148px] w-[220px] rounded-lg object-cover"
                         />
                         <div className="flex flex-col space-y-1">
-                        <p className="text-lg font-medium text-richblack-5">
+                        <p className="text-lg font-medium text-richblack-5 max-lg:mx-auto">
                             {course?.courseName}
                         </p>
-                        <p className="text-sm text-richblack-300">
+                        <p className="text-sm text-richblack-300 max-lg:mx-auto">
                             {course?.category?.name}
                         </p>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 max-lg:mx-auto">
                             <span className="text-yellow-5">4.5</span>
                                 <ReactStars
                                     count={5}
@@ -43,12 +43,12 @@ const RenderCartCourses = () => {
                                     fullIcon={<GiNinjaStar />}
                                 /> 
 
-                                <span className='text-richblack-400'>{course?.ratingAndReviews?.length} Ratings</span>
+                            <span className='text-richblack-400'>{course?.ratingAndReviews?.length} Ratings</span>
 
-                            </div>
                         </div>
                     </div>
-                    <div className="flex flex-col items-end space-y-2">
+                </div>
+                    <div className="flex flex-col items-end space-y-2 max-lg:gap-4">
                         <button
                         onClick={() => dispatch(removeFromCart(course._id))}
                         className="flex items-center gap-x-1 rounded-md border border-richblack-600 bg-richblack-700 py-3 px-[12px] text-pink-200"
