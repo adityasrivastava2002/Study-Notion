@@ -87,7 +87,7 @@ const EnrolledCourses = () => {
                                             isLabelVisible={false}
                                             />
                                     </div>
-                                    <div className='flex items-center justify-center w-[5%]'>
+                                    <div className=' max-md:hidden flex items-center justify-center w-[5%]'>
                                         <SlOptionsVertical />
                                     </div>
                                 </div>

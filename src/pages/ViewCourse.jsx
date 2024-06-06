@@ -29,7 +29,7 @@ const ViewCourse = () => {
         setCourseSpecificDetails()
     },[])
   return (
-    <div className='flex'>
+    <div className='flex max-md:flex-col'>
         <VideoDetailsSidebar reviewModal={reviewModal} setReviewModal={setReviewModal} />
         <div className={`${reviewModal ? "blur-md z-1" : ""}'`}>
             <Outlet/>

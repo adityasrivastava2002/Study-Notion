@@ -41,7 +41,7 @@ const VideoDetailsSidebar = ({reviewModal, setReviewModal}) => {
   },[courseSectionData, courseEntireData, location.pathname])
 
   return (
-    <div className={`text-richblack-5 bg-richblack-800 min-h-screen w-[300px]
+    <div className={`text-richblack-5 bg-richblack-800 min-h-screen w-[300px] max-md:w-full max-md:min-h-min
      ${reviewModal ? "blur-md z-1" : ""}'`}>
         {/* button and heading */}
         <div>

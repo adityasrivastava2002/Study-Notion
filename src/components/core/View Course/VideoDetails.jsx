@@ -61,17 +61,20 @@ const VideoDetails = () => {
           No Data Found
         </div>) 
         : (
+          <div>
           <Player
           ref={playerRef}
           aspectRatio='16:9'
           playsInline
           onEnded={() => setVideoEnded(true)}
           src={videoData?.videoUrl}
-          className={"min-h-[80vh] min-w-[75vw] m-[14px]"}
+          className={"min-h-[80vh] min-w-[75vw] m-[14px] max-md:max-w-min max-md:mx-auto"}
           >
-            {
+            
+          </Player>
+          {
               videoEnded && (
-                <div className='flex gap-4 py-8 justify-end'>
+                <div className='flex gap-4 py-8 justify-end max-md:flex-col max-md:m-4'>
                   {
                     !completedLectures.includes(subSectionId) && (
                       <IconBtn
@@ -116,7 +119,7 @@ const VideoDetails = () => {
                 </div>
               )
             }
-          </Player>
+          </div>
         )
       }
       <h1 className='px-4 pt-4'>{videoData?.title}</h1>

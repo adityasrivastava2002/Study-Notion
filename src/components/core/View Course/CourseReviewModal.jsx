@@ -45,12 +45,12 @@ const CourseReviewModal = ({setReviewModal}) => {
   return (
     <div className='text-richblack-5 flex flex-col items-center justify-center w-[100%] h-[100%] absolute'>
     {/* header */}
-      <div className='flex justify-between items-center w-[40%] bg-richblack-700 border-b-[1px] border-richblack-5 p-[16px]'>
+      <div className='flex justify-between items-center w-[40%] bg-richblack-700 border-b-[1px] border-richblack-5 p-[16px] max-md:w-[90%]'>
         <p>Add Review</p>
         <p onClick={() => handleCloseReviewModal()}><IoClose/></p>
       </div>
 
-      <div className='bg-richblack-800 w-[40%] flex flex-col gap-4 p-[16px]'>
+      <div className='bg-richblack-800 w-[40%] flex flex-col gap-4 p-[16px] max-md:w-[90%]'>
 
         {/* name dp */}
         <div className='flex items-center justify-center gap-4'>
